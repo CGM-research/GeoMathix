@@ -1,0 +1,4 @@
+"-std=c++17",
+"-Wall",
+"-I${workspaceFolder}/dependencies/include",
+"-L${workspaceFolder}/dependencies/lib",
