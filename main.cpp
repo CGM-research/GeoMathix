@@ -2,6 +2,36 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
+struct Color {
+  float r, g, b, a;
+
+};
+Color bg; // Global background color
+
+void OnResize(GLFWwindow* window, int width, int height) { // new width and height. Callback function
+  glViewport(0, 0, width, height);
+  //std::cout << "Window resized to " << width << "x" << height << '\n';
+}
+
+void processInput(GLFWwindow* window) {
+  if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    glfwSetWindowShouldClose(window, true);
+    std::cout << "Escape key pressed" << '\n';
+  }
+  if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+    bg = {1.f, 0.f, 0.f, 1.f};
+  }
+  if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+    bg = {0.f, 1.f, 0.f, 1.f};
+  }
+  if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+    bg = {0.f, 0.f, 1.f, 1.f};
+  }
+  if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+    bg = {0.f, 0.f, 0.f, 1.f};
+  }
+}
+
 int32_t main() {
   glfwInit();
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -20,10 +50,13 @@ int32_t main() {
     return -1;
   }
 
+  glfwSetFramebufferSizeCallback(window, OnResize);
+
   glViewport(0, 0, 500, 500);
   
   while (!glfwWindowShouldClose(window)) {
-    glClearColor(0.0f, 0.8f, 1.0f, 1.0f);
+    processInput(window);
+    glClearColor(bg.r, bg.g, bg.b, bg.a);
     glClear(GL_COLOR_BUFFER_BIT);
 
 
